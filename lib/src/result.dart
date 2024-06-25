@@ -9,21 +9,27 @@ sealed class Result<T extends Object, E extends Object> {
   /// Unwraps the result, yielding the content of an [Ok].
   ///
   /// Throws an exception if the result is an [Err], with a message provided by the [Err].
-  T unwrap() =>
-      switch (this) { Ok(:final value) => value, Err(:final error) => throw Exception(error) };
+  T unwrap() => switch (this) {
+        Ok(:final value) => value,
+        Err(:final error) => throw Exception(error)
+      };
 
   /// Unwraps a result, yielding the content of an [Ok].
   ///
   /// If the value is an [Err] then it returns [defaultValue].
   /// Throws an exception if the result is an [Err], with a message provided by the [Err].
-  T unwrapOr(T defaultValue) => switch (this) { Ok(:final value) => value, Err() => defaultValue };
+  T unwrapOr(T defaultValue) =>
+      switch (this) { Ok(:final value) => value, Err() => defaultValue };
 
   /// Unwraps a result, yielding the content of an [Ok].
-  T unwrapOrElse(T Function() fn) => switch (this) { Ok(:final value) => value, Err() => fn() };
+  T unwrapOrElse(T Function() fn) =>
+      switch (this) { Ok(:final value) => value, Err() => fn() };
 
   /// Unwraps a result, yielding the content of an [Err].
-  E unwrapErr() =>
-      switch (this) { Ok(:final value) => throw Exception(value), Err(:final error) => error };
+  E unwrapErr() => switch (this) {
+        Ok(:final value) => throw Exception(value),
+        Err(:final error) => error
+      };
 
   /// Unwraps a result, yielding the content of an [Err].
   T expect(String message) => switch (this) {
@@ -56,8 +62,10 @@ sealed class Result<T extends Object, E extends Object> {
   }
 
   @override
-  String toString() =>
-      switch (this) { Ok(:final value) => 'Ok($value)', Err(:final error) => 'Err($error)' };
+  String toString() => switch (this) {
+        Ok(:final value) => 'Ok($value)',
+        Err(:final error) => 'Err($error)'
+      };
 
   const Result();
 
