@@ -1,39 +1,73 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Result Pattern
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+The `Result Pattern` package for Dart provides a robust way of handling operations that may succeed or fail.
+By encapsulating the result of an operation in a `Result` object, this package allows developers to write code that is
+more predictable, safer, easier to understand and maintain.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+## Benefits
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+- **Improved error handling**: Encapsulates success and failure results in a single, predictable type.
+  predictable type.
+- **Cleaner code**: Reduces the need for try-catch blocks, making the code base cleaner and more readable.
+- **Composable**: Makes it easy to chain several operations together and manage their results in a unified way.
 
-## Features
+## Installation
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Add `result_pattern` to your `pubspec.yaml` file:
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+```bash
+dart pub add result_pattern
 ```
 
-## Additional information
+## Utilisation
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+### Basique
+
+```dart
+import 'package:result_pattern/result_pattern.dart';
+
+void main() {
+  final result = Result.ok(42);
+  expect(result.unwrap(), 42);
+
+  final value = switch (result) {
+    Ok(:final value) => value,
+    Err(:final error) => throw error,
+  };
+
+  expect(value, 42);
+}
+```
+
+### Future usage
+
+```dart
+import 'package:result_pattern/result_pattern.dart';
+
+AsyncResult<int, Exception> getOkResult() => Result.ok(42);
+
+Future<void> main() async {
+  expect(await future.unwrap(), 42);
+
+  // Use pattern matching to extract the value or throw an error
+  final value = switch (await future) {
+    Ok(:final value) => value,
+    Err(:final error) => throw error,
+  };
+
+  // Use the match method to handle error cases
+  final value = await getOkResult()
+    .expect('Error message');
+
+  expect(value, 42);
+}
+```
+
+## Contribution
+
+Contributions are welcome!
+Feel free to submit a pull request or open an issue if you have suggestions or find bugs.
+
+## License
+
+This package is licensed under the MIT license. See the LICENSE file for more details.
