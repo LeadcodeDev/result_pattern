@@ -1,7 +1,7 @@
 name: result_pattern
-description: A starting point for Dart libraries or applications.
+description: This package provides a robust way of handling operations that may succeed or fail.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/LeadcodeDev/result_pattern
 
 environment:
   sdk: ^3.4.0
