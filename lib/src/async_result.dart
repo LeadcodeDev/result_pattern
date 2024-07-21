@@ -2,8 +2,7 @@ import 'package:result_pattern/result_pattern.dart';
 
 typedef AsyncResult<T extends Object, E extends Object> = Future<Result<T, E>>;
 
-extension AsyncResultExtension<T extends Object, E extends Object>
-    on AsyncResult<T, E> {
+extension AsyncResultExtension<T extends Object, E extends Object> on AsyncResult<T, E> {
   Future<T> unwrap() async {
     final result = await this;
     return result.unwrap();
