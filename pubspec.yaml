@@ -1,6 +1,6 @@
 name: result_pattern
 description: This package provides a robust way of handling operations that may succeed or fail.
-version: 1.0.0
+version: 1.1.0
 repository: https://github.com/LeadcodeDev/result_pattern
 
 environment:

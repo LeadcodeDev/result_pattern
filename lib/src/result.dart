@@ -62,6 +62,22 @@ sealed class Result<T extends Object, E extends Object> {
     return this;
   }
 
+  /// Maps a [Result<T, E>] to [Result<R, E>] by applying a function to a contained [Ok] value, leaving an [Err] value untouched.
+  ///
+  /// Returns the [Result] of the function.
+  ///
+  /// - If the function returns an error, the error is returned as an [Err].
+  /// - If the function returns a value, the value is returned as an [Ok].
+  /// - If the function throws an exception, the exception is returned as an [Err].
+  R match<R>({R Function(T)? ok, E Function(E)? err}) {
+    final result = switch (this) {
+      Ok(:final value) => ok != null ? ok(value) : value as R,
+      Err(:final error) => err != null ? err(error) : Exception(error),
+    };
+
+    return result is Exception ? throw result : result as R;
+  }
+
   @override
   String toString() => switch (this) {
         Ok(:final value) => 'Ok($value)',

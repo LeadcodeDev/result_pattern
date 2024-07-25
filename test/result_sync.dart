@@ -36,6 +36,15 @@ void main() {
     test('result equals', () {
       expect(result.inspect((value) => expect(value, 42)), result);
     });
+
+    test('result with match', () {
+      final value = result.match(
+        ok: (value) => value,
+        err: (error) => throw error,
+      );
+
+      expect(value, 42);
+    });
   });
 
   group('result is Failure', () {
@@ -48,7 +57,10 @@ void main() {
     });
 
     test('result equals', () {
-      expect(() => result.unwrap(), throwsA('error'));
+      expect(
+          () => result.unwrap(),
+          throwsA(isA<Exception>()
+              .having((e) => e.toString(), 'description', contains('error'))));
     });
 
     test('with switch statement', () {
@@ -70,6 +82,26 @@ void main() {
 
     test('result equals', () {
       expect(result.inspectErr((value) => expect(value, 'error')), result);
+    });
+
+    test('result with match', () {
+      final value = result.match(
+        err: (error) => error,
+      );
+
+      expect(value, 'error');
+    });
+
+    test('result with throwing match', () {
+      expect(
+          () => result.match(
+                err: (error) => throw Exception(error),
+              ),
+          throwsA(isA<Exception>()));
+    });
+
+    test('result with throwing match and err not defined', () {
+      expect(() => result.match(), throwsA(isA<Exception>()));
     });
   });
 }
